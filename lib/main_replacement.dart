@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 
+import 'widgets/eco_illustration.dart';
+
 const ink = Color.fromARGB(255, 95, 6, 43);
 const coral = Color.fromARGB(255, 113, 97, 255);
 const gold = Color(0xFFF59E0B);
@@ -331,28 +333,29 @@ class _HeroImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     height: 290,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(28),
-      image: const DecorationImage(
-        image: AssetImage('assets/images/hero_environment.png'),
-        fit: BoxFit.cover,
-      ),
-    ),
-    child: Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
-        color: ink.withValues(alpha: .18),
-      ),
-      child: const Align(
-        alignment: Alignment.bottomLeft,
-        child: Padding(
-          padding: EdgeInsets.all(22),
-          child: Text(
-            'Notice the world\naround you.',
-            style: TextStyle(color: Colors.white, fontSize: 27, fontWeight: FontWeight.w700, height: 1.05),
+    clipBehavior: Clip.antiAlias,
+    decoration: BoxDecoration(borderRadius: BorderRadius.circular(28)),
+    child: Stack(
+      fit: StackFit.expand,
+      children: [
+        const EcoIllustration(scene: EcoScene.landscape),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(28),
+            color: ink.withValues(alpha: .42),
           ),
         ),
-      ),
+        const Align(
+          alignment: Alignment.bottomLeft,
+          child: Padding(
+            padding: EdgeInsets.all(22),
+            child: Text(
+              'Notice the world\naround you.',
+              style: TextStyle(color: Colors.white, fontSize: 27, fontWeight: FontWeight.w700, height: 1.05),
+            ),
+          ),
+        ),
+      ],
     ),
   );
 }
@@ -393,6 +396,15 @@ class _AuthPageState extends State<AuthPage> {
                 IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back_rounded)),
                 const SizedBox(height: 26),
                 const _Brand(color: ink),
+                const SizedBox(height: 24),
+                SizedBox(
+                  height: 132,
+                  width: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(22),
+                    child: EcoIllustration(scene: login ? EcoScene.landscape : EcoScene.food),
+                  ),
+                ),
                 const SizedBox(height: 50),
                 Text(
                   login ? 'Welcome back.' : 'Make it count.',
@@ -545,11 +557,22 @@ class _Overview extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
-              child: Image.asset('assets/images/hero_environment.png', fit: BoxFit.cover),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: const EcoIllustration(scene: EcoScene.landscape),
+              ),
             ),
           ],
         ),
         const SizedBox(height: 28),
+        SizedBox(
+          height: 142,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: const EcoIllustration(scene: EcoScene.landscape),
+          ),
+        ),
+        const SizedBox(height: 24),
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(color: ink, borderRadius: BorderRadius.circular(24)),
@@ -1005,7 +1028,7 @@ class _TravelStep extends StatelessWidget {
         const SizedBox(height: 8),
         const Text('Approximate daily distance is enough.', style: TextStyle(color: muted, fontSize: 12)),
         const SizedBox(height: 18),
-        SizedBox(height: 116, child: ClipRRect(borderRadius: BorderRadius.circular(18), child: Image.asset('assets/images/travel.png', fit: BoxFit.cover))),
+        SizedBox(height: 116, child: ClipRRect(borderRadius: BorderRadius.circular(18), child: const EcoIllustration(scene: EcoScene.travel))),
       ],
     );
   }
@@ -1031,7 +1054,7 @@ class _HomeStep extends StatelessWidget {
       const SizedBox(height: 8),
       const Text('Check your electricity bill for an approximate value.', style: TextStyle(color: muted, fontSize: 12)),
       const SizedBox(height: 18),
-      SizedBox(height: 140, child: ClipRRect(borderRadius: BorderRadius.circular(18), child: Image.asset('assets/images/home_energy.png', fit: BoxFit.cover))),
+      SizedBox(height: 140, child: ClipRRect(borderRadius: BorderRadius.circular(18), child: const EcoIllustration(scene: EcoScene.home))),
     ],
   );
 }
@@ -1092,7 +1115,7 @@ class _FoodStep extends StatelessWidget {
           );
         }),
         const SizedBox(height: 18),
-        SizedBox(height: 120, child: ClipRRect(borderRadius: BorderRadius.circular(18), child: Image.asset('assets/images/food.png', fit: BoxFit.cover))),
+        SizedBox(height: 120, child: ClipRRect(borderRadius: BorderRadius.circular(18), child: const EcoIllustration(scene: EcoScene.food))),
       ],
     );
   }
@@ -1172,7 +1195,7 @@ class _ResultCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              SizedBox(width: 64, height: 64, child: Image.asset('assets/images/eco_tips.png', fit: BoxFit.cover)),
+              SizedBox(width: 64, height: 64, child: ClipRRect(borderRadius: BorderRadius.circular(16), child: const EcoIllustration(scene: EcoScene.landscape))),
             ],
           ),
         ),
@@ -1311,7 +1334,7 @@ class HistoryPage extends StatelessWidget {
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(22)),
           child: Column(
             children: [
-              SizedBox(height: 140, child: Image.asset('assets/images/empty_history.png', fit: BoxFit.contain)),
+              SizedBox(height: 140, child: ClipRRect(borderRadius: BorderRadius.circular(18), child: const EcoIllustration(scene: EcoScene.history))),
               const SizedBox(height: 16),
               const Text('No saved estimates yet', style: TextStyle(color: ink, fontSize: 22, fontWeight: FontWeight.w800)),
               const SizedBox(height: 8),

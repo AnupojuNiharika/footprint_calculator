@@ -4,6 +4,7 @@ import 'database/database_helper.dart';
 import 'models/carbon_calculation.dart';
 import 'services/auth_service.dart';
 import 'services/carbon_calculator_service.dart';
+import 'widgets/eco_illustration.dart';
 
 const ink = Color(0xFF1E293B);
 const coral = Color(0xFFFF6F61);
@@ -352,20 +353,13 @@ class _HeroImage extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/images/hero_environment.png',
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
-              color: const Color(0xFFEAE3D7),
-              child: const Center(child: Icon(Icons.image_not_supported_rounded, color: ink)),
-            ),
-          ),
+          const EcoIllustration(scene: EcoScene.landscape),
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.transparent, ink.withValues(alpha: .20)],
+                colors: [Colors.transparent, ink.withValues(alpha: .5)],
               ),
             ),
           ),
@@ -489,6 +483,15 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 const SizedBox(height: 26),
                 const _Brand(color: ink),
+                const SizedBox(height: 24),
+                SizedBox(
+                  height: 132,
+                  width: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(22),
+                    child: EcoIllustration(scene: login ? EcoScene.landscape : EcoScene.food),
+                  ),
+                ),
                 const SizedBox(height: 50),
                 Text(
                   login ? "Welcome back." : "Make it count.",
@@ -641,25 +644,17 @@ class _Overview extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 10),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(18),
-              child: SizedBox(
-                width: 52,
-                height: 52,
-                child: Image.asset(
-                  'assets/images/hero_environment.png',
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const ColoredBox(
-                    color: Color(0xFFEAE3D7),
-                    child: Icon(Icons.image_not_supported_rounded, color: ink),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
         const SizedBox(height: 28),
+        SizedBox(
+          height: 142,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: const EcoIllustration(scene: EcoScene.landscape),
+          ),
+        ),
+        const SizedBox(height: 24),
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(color: ink, borderRadius: BorderRadius.circular(24)),
@@ -1051,14 +1046,7 @@ class _TravelStep extends StatelessWidget {
           height: 116,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(18),
-            child: Image.asset(
-              'assets/images/travel.png',
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                color: const Color(0xFFEAE3D7),
-                child: const Center(child: Icon(Icons.image_not_supported_rounded, color: ink)),
-              ),
-            ),
+            child: const EcoIllustration(scene: EcoScene.travel),
           ),
         ),
       ],
@@ -1090,14 +1078,7 @@ class _HomeStep extends StatelessWidget {
         height: 140,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(18),
-          child: Image.asset(
-            'assets/images/home_energy.png',
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
-              color: const Color(0xFFEAE3D7),
-              child: const Center(child: Icon(Icons.image_not_supported_rounded, color: ink)),
-            ),
-          ),
+          child: const EcoIllustration(scene: EcoScene.home),
         ),
       ),
     ],
@@ -1164,14 +1145,7 @@ class _FoodStep extends StatelessWidget {
           height: 120,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(18),
-            child: Image.asset(
-              'assets/images/food.png',
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                color: const Color(0xFFEAE3D7),
-                child: const Center(child: Icon(Icons.image_not_supported_rounded, color: ink)),
-              ),
-            ),
+            child: const EcoIllustration(scene: EcoScene.food),
           ),
         ),
       ],
@@ -1258,14 +1232,7 @@ class _ResultCard extends StatelessWidget {
                 height: 64,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
-                    'assets/images/eco_tips.png',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const ColoredBox(
-                      color: Color(0xFFEAE3D7),
-                      child: Icon(Icons.image_not_supported_rounded, color: ink),
-                    ),
-                  ),
+                  child: const EcoIllustration(scene: EcoScene.landscape),
                 ),
               ),
             ],
@@ -1407,11 +1374,7 @@ class HistoryPage extends StatelessWidget {
             children: [
               SizedBox(
                 height: 140,
-                child: Image.asset(
-                  'assets/images/empty_history.png',
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.image_not_supported_rounded, size: 64, color: ink),
-                ),
+                child: const EcoIllustration(scene: EcoScene.history),
               ),
               const SizedBox(height: 16),
               const Text("No calculations yet", style: TextStyle(color: ink, fontSize: 22, fontWeight: FontWeight.w800)),
